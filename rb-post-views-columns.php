@@ -71,7 +71,7 @@ function rbpvc_custom_columns_value( $column, $post_id ) {
    if ($column == 'rbpvc_views_count'){
 
     $rbpvc_post_view_count = get_post_meta(get_the_ID(), 'rbpvc_post_view', true);
-    echo $rbpvc_post_view_count; 
+    echo esc_html($rbpvc_post_view_count); 
    }
 }
 add_action('manage_posts_custom_column' , 'rbpvc_custom_columns_value', 10, 2);
@@ -87,18 +87,20 @@ add_filter('manage_edit-post_sortable_columns', 'rbpvc_sortable_column');
 // Add Custom Post Columns Filter
 function rbpvc_filter_column() {
 	
-	$filter_value = isset( $_GET['RBPVC'] ) ? $_GET['RBPVC'] : '';
+	$filter_value = isset( $_GET['RBPVC'] ) ? absint($_GET['RBPVC']) : '';
 	$values       = array(
 		'0' => __('All Posts', 'rb-post-views-columns'),
 		'1' => __('View Posts', 'rb-post-views-columns'),
 		'2' => __('No View Posts', 'rb-post-views-columns'),
 	);
 	?>
-    <select name="RBPVC">
+    <select name="<?php echo esc_attr('RBPVC'); ?>">
 		<?php
 		foreach ( $values as $key => $value ) {
-			printf( "<option value='%s' %s>%s</option>", $key,
-				$key == $filter_value ? "selected = 'selected'" : '',
+			printf( 
+				"<option value='%s' %s>%s</option>", 
+				$key,
+				$key == $filter_value ? strip_tags("selected = 'selected'") : '',
 				$value
 			);
 		}
@@ -110,7 +112,10 @@ add_action('restrict_manage_posts', 'rbpvc_filter_column');
 
 // Add Custom Post Columns Filter Value
 function rbpvc_filter_data($rbpvc_query) {
-	$filter_value = isset( $_GET['RBPVC'] ) ? $_GET['RBPVC'] : '';
+	if(!is_admin()){
+		return;
+	}
+	$filter_value = isset( $_GET['RBPVC'] ) ? absint($_GET['RBPVC']) : '';
 
 	if ( '1' == $filter_value ) {
 		$rbpvc_query->set( 'meta_query', array(
@@ -126,6 +131,12 @@ function rbpvc_filter_data($rbpvc_query) {
 				'compare' => 'NOT EXISTS'
 			)
 		) );
+	}
+
+	$rbpvc_orderby = $rbpvc_query->get('orderby');
+	if('rbpvc_post_view' === $rbpvc_orderby){
+		$rbpvc_query->set('meta_key','rbpvc_post_view');
+		$rbpvc_query->set('orberby','meta_value_num');
 	}
 
 }
