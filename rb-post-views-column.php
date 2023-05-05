@@ -1,23 +1,15 @@
 <?php
 /**
- * RB Post Views Columns
- * @package 		  WordPress
- * @subpackage 		  RB Free Plugin
- * @author            Bashir Rased
- * @copyright         2022 Bashir Rased
- * @license           GPL-2.0-or-later
- *
- * @wordpress-plugin
- * Plugin Name:       RB Post Views Columns
- * Plugin URI:        https://github.com/BashirRased/wp-plugin-rb-post-views-columns
- * Description:       RB Post Views Columns plugin use for your posts visit count.
+ * Plugin Name:       RB Post Views Column
+ * Plugin URI:        https://github.com/BashirRased/wp-plugin-rb-post-views-column
+ * Description:       RB Post Views Column plugin use for your posts visit count.
  * Version:           1.0.0
- * Requires at least: 5.9
- * Tested up to:      5.9
- * Requires PHP:      5.6
+ * Requires at least: 5.0
+ * Tested up to: 6.2
+ * Requires PHP: 7.1
  * Author:            Bashir Rased
  * Author URI:        https://profiles.wordpress.org/bashirrased2017/
- * Text Domain:       rb-post-views-columns
+ * Text Domain:       rb-post-views-column
  * Domain Path: 	  /languages
  * License:           GPL v2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -32,14 +24,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Plugin Text domain loaded
 function rbpvc_textdomain() {
-    load_plugin_textdomain('rb-post-views-columns', false, dirname(plugin_basename(__FILE__)).'/languages'); 
+    load_plugin_textdomain('rb-post-views-column', false, dirname(plugin_basename(__FILE__)).'/languages'); 
 }
 add_action('plugins_loaded', 'rbpvc_textdomain');
 
 // Github Page Link
 add_filter('plugin_row_meta', function ($links, $plugin) {
 	if (plugin_basename(__FILE__) == $plugin) {
-		$link = sprintf("<a href='%s' style='color:#b32d2e;'>%s</a>", esc_url('https://github.com/BashirRased/wp-plugin-rb-post-views-columns'), __('Fork on Github', 'rb-post-views-columns'));
+		$link = sprintf("<a href='%s' style='color:#b32d2e;'>%s</a>", esc_url('https://github.com/BashirRased/wp-plugin-rb-post-views-column'), __('Fork on Github', 'rb-post-views-column'));
 		array_push($links, $link);
 	}
 	return $links;
@@ -89,9 +81,9 @@ function rbpvc_filter_column() {
 	
 	$filter_value = isset( $_GET['RBPVC'] ) ? absint($_GET['RBPVC']) : '';
 	$values       = array(
-		'0' => __('All Posts', 'rb-post-views-columns'),
-		'1' => __('View Posts', 'rb-post-views-columns'),
-		'2' => __('No View Posts', 'rb-post-views-columns'),
+		'0' => __('All Posts', 'rb-post-views-column'),
+		'1' => __('View Posts', 'rb-post-views-column'),
+		'2' => __('No View Posts', 'rb-post-views-column'),
 	);
 	?>
     <select name="<?php echo esc_attr('RBPVC'); ?>">
