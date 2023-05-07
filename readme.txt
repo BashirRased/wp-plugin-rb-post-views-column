@@ -11,7 +11,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 RB Post Views Column plugin use for your posts visit count.
 
 == Description ==
-RB Post View Columns is a modern and easy to change plugin. With this plugin you can easily see the most visiting posts of any type of post types.
+RB Post Views Column is a modern and easy to change plugin. With this plugin you can easily see the most visiting posts of any type of post types.
 
 == Installation ==
 
