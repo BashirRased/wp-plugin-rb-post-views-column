@@ -1,9 +1,10 @@
-=== RB Post Views Column ===
-Contributors: bashirrased
-Tags: rb, rb-post-views-column
-Requires at least: 5.0
-Tested up to: 6.2
-Requires PHP: 7.1
+=== RB Post Views Columns ===
+Contributors: bashirrased2017
+Donate link: https://bashirrased.com/
+Tags: post views columns, post view columns, bashir rased
+Requires at least: 6.4
+Tested up to: 6.5
+Requires PHP: 7.0
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -32,6 +33,11 @@ Appearance -> Widgets -> Widgets List: Widgets Category -> RB Post Views Column
 = Active Widget =
 Actiated your widget and save.
 
+== Frequently Asked Questions ==
+
+= 1. Need any other plugin requirements? =
+No
+
 == Screenshots ==
 
 1. RB Post Views Column Plugin Admin Dashobard Output.
@@ -40,3 +46,8 @@ Actiated your widget and save.
 
 = 1.0.0 =
 * 21.04.2022 - 1st submission
+
+== Upgrade Notice ==
+
+= 1.0.0 =
+* 28.04.2024 - Last Updated

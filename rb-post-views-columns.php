@@ -1,15 +1,15 @@
 <?php
 /**
- * Plugin Name:       RB Post Views Column
- * Plugin URI:        https://github.com/BashirRased/wp-plugin-rb-post-views-column
- * Description:       RB Post Views Column plugin use for your posts visit count.
+ * Plugin Name:       RB Post Views Columns
+ * Plugin URI:        https://github.com/BashirRased/wp-plugin-rb-post-views-columns
+ * Description:       RB Post Views Columns plugin use for your posts visit count.
  * Version:           1.0.0
- * Requires at least: 5.0
- * Tested up to: 6.2
- * Requires PHP: 7.1
+ * Requires at least: 6.4
+ * Tested up to: 6.5
+ * Requires PHP: 7.0
  * Author:            Bashir Rased
  * Author URI:        https://profiles.wordpress.org/bashirrased2017/
- * Text Domain:       rb-post-views-column
+ * Text Domain:       rb-post-views-columns
  * Domain Path: 	  /languages
  * License:           GPL v2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -24,14 +24,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Plugin Text domain loaded
 function rbpvc_textdomain() {
-    load_plugin_textdomain('rb-post-views-column', false, dirname(plugin_basename(__FILE__)).'/languages'); 
+    load_plugin_textdomain('rb-post-views-columns', false, dirname(plugin_basename(__FILE__)).'/languages'); 
 }
 add_action('plugins_loaded', 'rbpvc_textdomain');
 
 // Github Page Link
 add_filter('plugin_row_meta', function ($links, $plugin) {
 	if (plugin_basename(__FILE__) == $plugin) {
-		$link = sprintf("<a href='%s' style='color:#b32d2e;'>%s</a>", esc_url('https://github.com/BashirRased/wp-plugin-rb-post-views-column'), __('Fork on Github', 'rb-post-views-column'));
+		$link = sprintf("<a href='%s' style='color:#b32d2e;'>%s</a>", esc_url('https://github.com/BashirRased/wp-plugin-rb-post-views-columns'), __('Fork on Github', 'rb-post-views-columns'));
 		array_push($links, $link);
 	}
 	return $links;
@@ -76,14 +76,19 @@ function rbpvc_sortable_column( $columns ) {
 }
 add_filter('manage_edit-post_sortable_columns', 'rbpvc_sortable_column');
 
+// Generate a nonce
+/* $rbpvc_nonce = wp_create_nonce( 'rbpvc_data' ); */
+
 // Add Custom Post Columns Filter
 function rbpvc_filter_column() {
+	$filter_value = '';
+	$values = '';
 	
-	$filter_value = isset( $_GET['RBPVC'] ) ? absint($_GET['RBPVC']) : '';
-	$values       = array(
-		'0' => __('All Posts', 'rb-post-views-column'),
-		'1' => __('View Posts', 'rb-post-views-column'),
-		'2' => __('No View Posts', 'rb-post-views-column'),
+	$filter_value = isset( $_GET['RBPVC'] ) ? $_GET['RBPVC'] : '';
+	$values = array(
+		0 => __('All Posts', 'rb-post-views-columns'),
+		1 => __('View Posts', 'rb-post-views-columns'),
+		2 => __('No View Posts', 'rb-post-views-columns'),
 	);
 	?>
     <select name="<?php echo esc_attr('RBPVC'); ?>">
@@ -91,9 +96,9 @@ function rbpvc_filter_column() {
 		foreach ( $values as $key => $value ) {
 			printf( 
 				"<option value='%s' %s>%s</option>", 
-				$key,
-				$key == $filter_value ? strip_tags("selected = 'selected'") : '',
-				$value
+				esc_html($key, 'rb-post-views-columns'),
+				$key == $filter_value ? "selected = 'selected'" : '',
+				esc_html($value, 'rb-post-views-columns')
 			);
 		}
 		?>
@@ -107,16 +112,17 @@ function rbpvc_filter_data($rbpvc_query) {
 	if(!is_admin()){
 		return;
 	}
-	$filter_value = isset( $_GET['RBPVC'] ) ? absint($_GET['RBPVC']) : '';
+	
+	$filter_value = isset( $_GET['RBPVC'] ) ? $_GET['RBPVC'] : '';
 
-	if ( '1' == $filter_value ) {
+	if ( 1 == $filter_value ) {
 		$rbpvc_query->set( 'meta_query', array(
 			array(
 				'key'     => 'rbpvc_post_view',
 				'compare' => 'EXISTS'
 			)
 		) );
-	} else if ( '2' == $filter_value ) {
+	} else if ( 2 == $filter_value ) {
 		$rbpvc_query->set( 'meta_query', array(
 			array(
 				'key'     => 'rbpvc_post_view',
