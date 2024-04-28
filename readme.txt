@@ -1,7 +1,7 @@
 === RB Post Views Columns ===
 Contributors: bashirrased2017
 Donate link: https://bashirrased.com/
-Tags: post views columns, post view columns, bashir rased
+Tags: views columns, view columns
 Requires at least: 6.4
 Tested up to: 6.5
 Requires PHP: 7.0
@@ -25,7 +25,7 @@ Plugins -> Add New
 for "RB Post Views Column"
 
 = Install and Activate =
-RB Post Views Column from your Plugins page
+"RB Post Views Column" from your Plugins page
 
 = Go to =
 Appearance -> Widgets -> Widgets List: Widgets Category -> RB Post Views Column
